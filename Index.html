@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Psychic Game</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head> 
+<body>
+<div class="container"> 
+	<h1><strong>Psychic Game</strong></h1>
+	<h2> Guess what letter I'm thinking of! <h2>
+    <p id ="wins"></p>
+	<p id ="losses"></p>
+	<p id ="guessleft"></p>
+	<p id ="guessfar"></p>
+</div>
+<script type="text/javascript">
+
+var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+var wins = 0;
+var losses = 0;
+var guessesLeft = 9;
+var userLetter = [];
+var cpuLetter = [];
+
+    var guessleftText = document.getElementById("guessleft");
+    var guessfarText = document.getElementById("guessfar");
+    var winsText = document.getElementById("wins");
+    var lossesText = document.getElementById("losses");
+    
+
+
+    
+	var cpuGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+	cpuLetter.push(cpuGuess);
+    console.log(cpuGuess, "cpuGuess")
+
+document.onkeyup = function(event) {
+	var Guesses= event.key;
+	userLetter.push(Guesses);
+    console.log(Guesses);
+
+console.log(Guesses === cpuGuess, "equals");
+console.log((guessesLeft > 0));
+    if ((Guesses === cpuGuess) && (guessesLeft > 0)) {
+        wins++;
+        guessesLeft = 9;
+        userLetter.length = 0;
+        cpuLetter.length = 0;
+        var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        cpuLetter.push(cpuGuess);
+        console.log("inside if statement")
+    }
+
+    else if ((userLetter !== cpuLetter[0]) && (guessesLeft > 0)) {
+        guessesLeft = guessesLeft-1;
+    }
+
+    else {
+        losses++;
+        guessesLeft = 9;
+        userLetter.length = 0;
+        cpuLetter.length = 0;
+        var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        cpuLetter.push(cpuGuess);
+    }
+
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
+        guessleftText.textContent = "Guesses Left: " + guessesLeft;
+        guessfarText.textContent = "Guesses So Far: " + userLetter;
+}
+</script>
+</body>
+</html>
